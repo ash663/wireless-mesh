@@ -1,0 +1,30 @@
+// setup AdHoc Network on MacOSx
+
+import Foundation
+import CoreWLAN
+
+
+var networkName = Process.arguments[1]
+
+
+//var networkName = "foo"
+var password = Process.arguments[2]
+var channel = Int(Process.arguments[3])
+
+if let iface = CWWiFiClient.sharedWiFiClient().interface() {
+    do {
+        try iface.startIBSSModeWithSSID(
+            networkName.dataUsingEncoding(NSUTF8StringEncoding)!,
+            security: CWIBSSModeSecurity.WEP104,
+            channel: channel!,
+            password: password as String
+        )
+        print("Success")
+    } catch let error as NSError {
+        print("Error", error)
+        exit(1)
+    }
+} else {
+    print("Invalid interface")
+    exit(1)
+}

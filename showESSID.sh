@@ -1,0 +1,2 @@
+# for MAC
+airport -s
